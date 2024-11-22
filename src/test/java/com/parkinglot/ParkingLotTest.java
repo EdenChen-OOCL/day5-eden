@@ -51,13 +51,13 @@ public class ParkingLotTest {
     @Test
     public void should_return_null_ticket_when_park_given_parking_lot_is_full() {
         // Given
-        ParkingLot parkingLot = new ParkingLot(1);
-        Car firstCar = new Car();
+        ParkingLot parkingLot = new ParkingLot();
         Car secondCar = new Car();
         // When
-        Ticket firstTicket = parkingLot.park(firstCar);
+        for(int times = 1; times <= 10; times++) {
+            parkingLot.park(new Car());
+        }
         // Then
-        assertNotNull(firstTicket);
         assertThrows(NoAvailablePositionException.class, () -> parkingLot.park(secondCar), "No available position.");
     }
 

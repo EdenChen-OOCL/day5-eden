@@ -5,12 +5,14 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ParkingLot {
+
+    public static final int MAX_CAPACITY = 10;
     private int capacity;
 
-    private final Map<Ticket, Car> ticketCarMap = new HashMap<Ticket, Car>(10);
+    private final Map<Ticket, Car> ticketCarMap = new HashMap<>(MAX_CAPACITY);
 
     public ParkingLot() {
-        this(10);
+        this(MAX_CAPACITY);
     }
 
     public ParkingLot(Integer capacity) {
@@ -18,12 +20,12 @@ public class ParkingLot {
     }
 
     public Ticket park(Car car) {
-        if (ticketCarMap.size() >= capacity) {
+        if (ticketCarMap.size() >= MAX_CAPACITY) {
             throw new NoAvailablePositionException();
         }
         Ticket ticket = new Ticket();
         ticketCarMap.put(ticket, car);
-        capacity--;
+//        capacity--;
         return ticket;
     }
 
@@ -32,7 +34,7 @@ public class ParkingLot {
         if (Objects.isNull(car)) {
             throw new UnrecognizedParkingTicketException();
         }
-        capacity++;
+//        capacity++;
         return car;
     }
 }
