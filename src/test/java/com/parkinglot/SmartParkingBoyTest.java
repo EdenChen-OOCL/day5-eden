@@ -1,6 +1,7 @@
 package com.parkinglot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -48,6 +49,19 @@ public class SmartParkingBoyTest {
         // Then
         assertEquals(carA, actualCarA);
         assertEquals(carB, actualCarB);
+    }
+
+    @Test
+    public void should_throw_unRecognizedParkingTicketException_when_fetch_given_wrong_ticket_and_smart_parking_boy() {
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        Ticket wrongTicket = new Ticket();
+        // When
+        UnrecognizedParkingTicketException exception = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(wrongTicket));
+        // Then
+        assertEquals("Unrecognized parking ticket", exception.getMessage());
     }
 
 }
