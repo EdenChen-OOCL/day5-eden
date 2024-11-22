@@ -20,7 +20,7 @@ public class SmartParkingBoyTest {
     }
 
     @Test
-    public void should_park_in_second_when_park_given_two_parking_lot_has_second_more_empty_position() {
+    public void should_park_in_second_when_park_given_first_has_1_empty_position_and_second_has_10() {
         // Given
         ParkingLot firstParkingLot = new ParkingLot(1);
         ParkingLot secondParkingLot = new ParkingLot(10);
