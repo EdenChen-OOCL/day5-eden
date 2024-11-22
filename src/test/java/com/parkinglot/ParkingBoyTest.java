@@ -59,4 +59,16 @@ public class ParkingBoyTest {
         assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(wrongTicket), "Unrecognized parking ticket");
     }
 
+    @Test
+    public void should_throw_unRecognizedParkingTicketException_when_fetch_given_ticket_use_twice_and_parking_boy() {
+        // Given
+        ParkingBoy parkingBoy = new ParkingBoy();
+        Car car = new Car();
+        Ticket ticket = parkingBoy.park(car);
+        // When
+        parkingBoy.fetch(ticket);
+        // Then
+        assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(ticket), "Unrecognized parking ticket");
+    }
+
 }
