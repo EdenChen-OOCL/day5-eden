@@ -1,9 +1,11 @@
 package com.parkinglot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class ParkingBoyTest {
@@ -77,11 +79,30 @@ public class ParkingBoyTest {
         ParkingBoy parkingBoy = new ParkingBoy();
         Car secondCar = new Car();
         // When
+        parkTenCar(parkingBoy);
+        // Then
+        assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(secondCar), "No available position.");
+    }
+
+    private static void parkTenCar(ParkingBoy parkingBoy) {
         for(int times = 1; times <= 10; times++) {
             parkingBoy.park(new Car());
         }
+    }
+
+    @Test
+    public void should_in_first_parking_lot_when_park_given_parking_boy_has_multiple_empty_parking_lot() {
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        Car car = new Car();
+        // When
+        Ticket ticket = parkingBoy.park(car);
+        ParkingLot targetParkingLot = parkingBoy.getParkingLotByTicket(ticket);
         // Then
-        assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(secondCar), "No available position.");
+        assertEquals(firstParkingLot, targetParkingLot);
+        assertNotEquals(secondParkingLot, targetParkingLot);
     }
 
 }
