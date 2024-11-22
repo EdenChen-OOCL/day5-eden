@@ -154,4 +154,18 @@ public class ParkingBoyTest {
         assertEquals("Unrecognized parking ticket", exception.getMessage());
     }
 
+    @Test
+    public void should_throw_unRecognizedParkingTicketException_when_fetch_given_ticket_use_twice() {
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        Car car = new Car();
+        Ticket ticket = parkingBoy.park(car);
+        // When
+        parkingBoy.fetch(ticket);
+        // Then
+        assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(ticket), "Unrecognized parking ticket");
+    }
+
 }
