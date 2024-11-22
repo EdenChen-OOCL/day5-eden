@@ -32,4 +32,22 @@ public class SmartParkingBoyTest {
         assertEquals(secondParkingLot, targetParkingLot);
     }
 
+    @Test
+    public void should_get_carA_and_carB_when_fetch_given_ticketA_and_ticketB() {
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        Car carA = new Car();
+        Car carB = new Car();
+        Ticket ticketA = parkingBoy.park(carA);
+        Ticket ticketB = parkingBoy.park(carB);
+        // When
+        Car actualCarA = parkingBoy.fetch(ticketA);
+        Car actualCarB = parkingBoy.fetch(ticketB);
+        // Then
+        assertEquals(carA, actualCarA);
+        assertEquals(carB, actualCarB);
+    }
+
 }
