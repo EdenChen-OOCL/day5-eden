@@ -78,4 +78,19 @@ public class SmartParkingBoyTest {
         assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(ticket), "Unrecognized parking ticket");
     }
 
+    @Test
+    public void should_return_NoAvailablePositionException_when_park_given_parking_lot_is_full_and_two_parking_lot() {
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot(0);
+        ParkingLot secondParkingLot = new ParkingLot(0);
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        Car secondCar = new Car();
+        // When
+        // Then
+        assertThrows(
+                NoAvailablePositionException.class,
+                () -> parkingBoy.park(secondCar),
+                "No available position.");
+    }
+
 }
