@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class ParkingBoy {
 
-    private final List<ParkingLot> parkingLots = new ArrayList<>();
+    protected final List<ParkingLot> parkingLots = new ArrayList<>();
 
     public ParkingBoy() {
         parkingLots.add(new ParkingLot());
