@@ -1,11 +1,8 @@
-package com.ParkingBoy;
+package com.parkinglot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.parkinglot.Car;
-import com.parkinglot.ParkingBoy;
-import com.parkinglot.Ticket;
 import org.junit.jupiter.api.Test;
 
 public class ParkingBoyTest {
@@ -32,6 +29,22 @@ public class ParkingBoyTest {
         Car fetchCar = parkingBoy.fetch(ticket);
         // Then
         assertEquals(parkCar, fetchCar);
+    }
+
+    @Test
+    public void should_return_right_car_when_fetch_given_two_car_and_two_ticket_and_parking_boy() {
+        // Given
+        ParkingBoy parkingBoy = new ParkingBoy();
+        Car firstCar = new Car();
+        Car secondCar = new Car();
+        Ticket firstTicket = parkingBoy.park(firstCar);
+        Ticket secondTicket = parkingBoy.park(secondCar);
+        // When
+        Car firstFetchedCar = parkingBoy.fetch(firstTicket);
+        Car secondFetchedCar = parkingBoy.fetch(secondTicket);
+        // Then
+        assertEquals(firstCar, firstFetchedCar);
+        assertEquals(secondCar, secondFetchedCar);
     }
 
 }
