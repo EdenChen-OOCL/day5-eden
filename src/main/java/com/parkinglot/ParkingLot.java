@@ -44,4 +44,8 @@ public class ParkingLot {
         return maxCapacity - ticketCarMap.size();
     }
 
+    public BigDecimal getAvailablePositionRate() {
+        return BigDecimal.valueOf(getAvailableCapacity()).divide(BigDecimal.valueOf(maxCapacity), 2, RoundingMode.HALF_UP);
+    }
+
 }

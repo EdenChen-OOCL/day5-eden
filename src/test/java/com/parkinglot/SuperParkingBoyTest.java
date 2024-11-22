@@ -18,4 +18,20 @@ public class SuperParkingBoyTest{
         // Then
         assertEquals(firstParkingLot, targetParkingLot);
     }
+
+    @Test
+    public void should_park_in_second_when_park_given_first_has_20_available_position_rate_and_second_has_100() {
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot(5);
+        ParkingLot secondParkingLot = new ParkingLot(1);
+        SuperParkingBoy parkingBoy = new SuperParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        // When
+        Ticket firstTicket = parkingBoy.park(new Car());
+        Ticket secondTicket = parkingBoy.park(new Car());
+        ParkingLot actualFirstParkingLot = parkingBoy.getParkingLotByTicket(firstTicket);
+        ParkingLot actualSecondParkingLot = parkingBoy.getParkingLotByTicket(secondTicket);
+        // Then
+        assertEquals(firstParkingLot, actualFirstParkingLot);
+        assertEquals(secondParkingLot, actualSecondParkingLot);
+    }
 }
