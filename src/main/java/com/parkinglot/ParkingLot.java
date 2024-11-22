@@ -19,7 +19,7 @@ public class ParkingLot {
 
     public Ticket park(Car car) {
         if (ticketCarMap.size() >= capacity) {
-            return null;
+            throw new NoAvailablePositionException();
         }
         Ticket ticket = new Ticket();
         ticketCarMap.put(ticket, car);
@@ -29,9 +29,10 @@ public class ParkingLot {
 
     public Car fetch(Ticket ticket) {
         Car car = ticketCarMap.remove(ticket);
-        if (Objects.nonNull(car)) {
-            capacity++;
+        if (Objects.isNull(car)) {
+            throw new UnrecognizedParkingTicketException();
         }
+        capacity++;
         return car;
     }
 }

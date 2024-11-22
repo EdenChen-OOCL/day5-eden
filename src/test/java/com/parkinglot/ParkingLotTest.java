@@ -3,11 +3,11 @@ package com.parkinglot;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 public class ParkingLotTest {
-
     @Test
     public void should_return_ticket_when_park_given_a_car_and_parking_lot_is_empty() {
         // Given
@@ -49,31 +49,6 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_return_null_when_fetch_given_wrong_ticket() {
-        // Given
-        ParkingLot parkingLot = new ParkingLot();
-        Ticket wrongTicket = new Ticket();
-        // When
-        Car wrongCar = parkingLot.fetch(wrongTicket);
-        // Then
-        assertNull(wrongCar);
-    }
-
-    @Test
-    public void should_return_null_when_fetch_given_ticket_use_twice() {
-        // Given
-        ParkingLot parkingLot = new ParkingLot();
-        Car car = new Car();
-        Ticket ticket = parkingLot.park(car);
-        // When
-        Car firstFetchedCar = parkingLot.fetch(ticket);
-        Car secondFetchedCar = parkingLot.fetch(ticket);
-        // Then
-        assertNotNull(firstFetchedCar);
-        assertNull(secondFetchedCar);
-    }
-
-    @Test
     public void should_return_null_ticket_when_park_given_parking_lot_is_full() {
         // Given
         ParkingLot parkingLot = new ParkingLot(1);
@@ -81,9 +56,32 @@ public class ParkingLotTest {
         Car secondCar = new Car();
         // When
         Ticket firstTicket = parkingLot.park(firstCar);
-        Ticket secondTicket = parkingLot.park(secondCar);
         // Then
         assertNotNull(firstTicket);
-        assertNull(secondTicket);
+        assertThrows(NoAvailablePositionException.class, () -> parkingLot.park(secondCar), "No available position.");
     }
+
+    @Test
+    public void should_return_null_car_and_print_error_message_when_fetch_given_wrong_ticket() {
+        // Given
+        ParkingLot parkingLot = new ParkingLot();
+        Ticket wrongTicket = new Ticket();
+        // When
+
+        // Then
+        assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot.fetch(wrongTicket), "Unrecognized parking ticket");
+    }
+
+    @Test
+    public void should_return_null_car_and_print_error_message_when_fetch_given_ticket_use_twice() {
+        // Given
+        ParkingLot parkingLot = new ParkingLot();
+        Car car = new Car();
+        Ticket ticket = parkingLot.park(car);
+        // When
+        // Then
+        assertThrows(UnrecognizedParkingTicketException.class, () -> parkingLot.fetch(ticket), "Unrecognized parking ticket");
+    }
+
+
 }
