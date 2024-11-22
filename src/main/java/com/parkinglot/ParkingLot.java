@@ -6,11 +6,15 @@ import java.util.Objects;
 
 public class ParkingLot {
 
-    public static final int MAX_CAPACITY = 10;
+    private int MAX_CAPACITY = 10;
 
     private final Map<Ticket, Car> ticketCarMap = new HashMap<>();
 
     public ParkingLot() {
+    }
+
+    public ParkingLot(int maxCapacity) {
+        this.MAX_CAPACITY = maxCapacity;
     }
 
     public Ticket park(Car car) {
@@ -32,6 +36,10 @@ public class ParkingLot {
             throw new UnrecognizedParkingTicketException();
         }
         return car;
+    }
+
+    public int getFreeCapacity() {
+        return MAX_CAPACITY - ticketCarMap.size();
     }
 
 }

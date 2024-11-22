@@ -19,4 +19,17 @@ public class SmartParkingBoyTest {
         assertEquals(firstParkingLot, targetParkingLot);
     }
 
+    @Test
+    public void should_park_in_second_when_park_given_two_parking_lot_has_second_more_empty_position() {
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot(1);
+        ParkingLot secondParkingLot = new ParkingLot(10);
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        // When
+        Ticket ticket = parkingBoy.park(new Car());
+        ParkingLot targetParkingLot = parkingBoy.getParkingLotByTicket(ticket);
+        // Then
+        assertEquals(secondParkingLot, targetParkingLot);
+    }
+
 }
