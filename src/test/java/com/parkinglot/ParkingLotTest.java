@@ -72,4 +72,18 @@ public class ParkingLotTest {
         assertNotNull(firstFetchedCar);
         assertNull(secondFetchedCar);
     }
+
+    @Test
+    public void should_return_null_ticket_when_park_given_parking_lot_is_full() {
+        // Given
+        ParkingLot parkingLot = new ParkingLot(1);
+        Car firstCar = new Car();
+        Car secondCar = new Car();
+        // When
+        Ticket firstTicket = parkingLot.park(firstCar);
+        Ticket secondTicket = parkingLot.park(secondCar);
+        // Then
+        assertNotNull(firstTicket);
+        assertNull(secondTicket);
+    }
 }
