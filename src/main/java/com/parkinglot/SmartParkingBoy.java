@@ -13,7 +13,7 @@ public class SmartParkingBoy extends ParkingBoy {
     public ParkingLot getAvailableParkingLot() {
         return parkingLots.stream()
                 .filter(ParkingLot::isAvailable)
-                .max(Comparator.comparingInt(ParkingLot::getFreeCapacity))
+                .max(Comparator.comparingInt(ParkingLot::getAvailableCapacity))
                 .orElse(parkingLots.get(0));
     }
 }
