@@ -8,13 +8,13 @@ public class ParkingLot {
 
     public static final int MAX_CAPACITY = 10;
 
-    private final Map<Ticket, Car> ticketCarMap = new HashMap<>(MAX_CAPACITY);
+    private final Map<Ticket, Car> ticketCarMap = new HashMap<>();
 
     public ParkingLot() {
     }
 
     public Ticket park(Car car) {
-        if (isAvailable()) {
+        if (!isAvailable()) {
             throw new NoAvailablePositionException();
         }
         Ticket ticket = new Ticket();
@@ -23,7 +23,7 @@ public class ParkingLot {
     }
 
     public boolean isAvailable() {
-        return ticketCarMap.size() >= MAX_CAPACITY;
+        return ticketCarMap.size() < MAX_CAPACITY;
     }
 
     public Car fetch(Ticket ticket) {

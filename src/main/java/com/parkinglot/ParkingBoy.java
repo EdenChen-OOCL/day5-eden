@@ -18,7 +18,9 @@ public class ParkingBoy {
 
     public Ticket park(Car car) {
         ParkingLot parkingLot = getAvailableParkingLot();
-        return parkingLot.park(car);
+        Ticket ticket = parkingLot.park(car);
+        ticket.setParkingLotNumber(parkingLots.indexOf(parkingLot));
+        return ticket;
     }
 
     public Car fetch(Ticket ticket) {
@@ -32,6 +34,9 @@ public class ParkingBoy {
     }
 
     public ParkingLot getAvailableParkingLot() {
-        return parkingLots.stream().filter(ParkingLot::isAvailable).findFirst().orElse(parkingLots.get(0));
+        return parkingLots.stream()
+                .filter(ParkingLot::isAvailable)
+                .findFirst()
+                .orElse(parkingLots.get(0));
     }
 }

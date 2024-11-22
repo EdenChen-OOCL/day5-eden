@@ -80,8 +80,12 @@ public class ParkingBoyTest {
         Car secondCar = new Car();
         // When
         parkTenCar(parkingBoy);
+        parkTenCar(parkingBoy);
         // Then
-        assertThrows(NoAvailablePositionException.class, () -> parkingBoy.park(secondCar), "No available position.");
+        assertThrows(
+                NoAvailablePositionException.class,
+                () -> parkingBoy.park(secondCar),
+                "No available position.");
     }
 
     private static void parkTenCar(ParkingBoy parkingBoy) {
@@ -103,6 +107,22 @@ public class ParkingBoyTest {
         // Then
         assertEquals(firstParkingLot, targetParkingLot);
         assertNotEquals(secondParkingLot, targetParkingLot);
+    }
+
+    @Test
+    public void should_in_second_parking_lot_when_park_given_first_is_full_and_second_is_empty() {
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        parkTenCar(parkingBoy);
+        Car car = new Car();
+        // When
+        Ticket ticket = parkingBoy.park(car);
+        ParkingLot targetParkingLot = parkingBoy.getParkingLotByTicket(ticket);
+        // Then
+        assertNotEquals(firstParkingLot, targetParkingLot);
+        assertEquals(secondParkingLot, targetParkingLot);
     }
 
 }
