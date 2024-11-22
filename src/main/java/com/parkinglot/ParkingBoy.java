@@ -2,6 +2,7 @@ package com.parkinglot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ParkingBoy {
 
@@ -18,9 +19,7 @@ public class ParkingBoy {
 
     public Ticket park(Car car) {
         ParkingLot parkingLot = getAvailableParkingLot();
-        Ticket ticket = parkingLot.park(car);
-        ticket.setParkingLotNumber(parkingLots.indexOf(parkingLot));
-        return ticket;
+        return forceParkIn(car, parkingLot);
     }
 
     public Car fetch(Ticket ticket) {
@@ -38,5 +37,15 @@ public class ParkingBoy {
                 .filter(ParkingLot::isAvailable)
                 .findFirst()
                 .orElse(parkingLots.get(0));
+    }
+
+    public Ticket forceParkIn(Car car, ParkingLot parkingLot) {
+        int parkingLotNumber = parkingLots.indexOf(parkingLot);
+        if (parkingLotNumber == -1) {
+            return null;
+        }
+        Ticket ticket = parkingLot.park(car);
+        ticket.setParkingLotNumber(parkingLots.indexOf(parkingLot));
+        return ticket;
     }
 }

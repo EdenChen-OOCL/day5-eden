@@ -125,4 +125,20 @@ public class ParkingBoyTest {
         assertEquals(secondParkingLot, targetParkingLot);
     }
 
+    @Test
+    public void should_carA_in_parkingLotA_and_carB_in_parkingLostB_when_park_given_two_parking_lot_and_two_car() {
+        // Given
+        ParkingLot firstParkingLot = new ParkingLot();
+        ParkingLot secondParkingLot = new ParkingLot();
+        ParkingBoy parkingBoy = new ParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        Car firstCar = new Car();
+        Car secondCar = new Car();
+        // When
+        Ticket firstTicket = parkingBoy.forceParkIn(firstCar, firstParkingLot);
+        Ticket secondTicket = parkingBoy.forceParkIn(secondCar, secondParkingLot);
+        // Then
+        assertEquals(firstCar, parkingBoy.fetch(firstTicket));
+        assertEquals(secondCar, parkingBoy.fetch(secondTicket));
+    }
+
 }
