@@ -1,24 +1,39 @@
 package com.parkinglot;
 
+import com.parkinglot.strategy.ParkingStrategyEnum;
+import com.parkinglot.strategy.factory.StrategyFactory;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ParkingBoy {
 
     protected final List<ParkingLot> parkingLots = new ArrayList<>();
 
+    private ParkingStrategyEnum preferParkingStrategy;
+
     public ParkingBoy() {
         parkingLots.add(new ParkingLot());
         parkingLots.add(new ParkingLot());
+        preferParkingStrategy = ParkingStrategyEnum.SEQUENTIAL;
     }
 
     public ParkingBoy(List<ParkingLot> parkingLots) {
         this.parkingLots.addAll(parkingLots);
+        preferParkingStrategy = ParkingStrategyEnum.SEQUENTIAL;
+    }
+
+    public ParkingBoy(ParkingStrategyEnum preferParkingStrategy) {
+        this();
+        this.preferParkingStrategy = preferParkingStrategy;
+    }
+
+    public ParkingBoy(List<ParkingLot> parkingLots, ParkingStrategyEnum preferParkingStrategy) {
+        this(parkingLots);
+        this.preferParkingStrategy = preferParkingStrategy;
     }
 
     public Ticket park(Car car) {
-        ParkingLot parkingLot = getAvailableParkingLot();
+        ParkingLot parkingLot = StrategyFactory.getParkingStrategy(preferParkingStrategy).getBestParkingLot(parkingLots);
         return forceParkIn(car, parkingLot);
     }
 
@@ -49,8 +64,12 @@ public class ParkingBoy {
         return ticket;
     }
 
-    public void assignParkingLots(List<ParkingLot> parkingLots) {
+    public void setParkingLots(List<ParkingLot> parkingLots) {
         this.parkingLots.clear();
         this.parkingLots.addAll(parkingLots);
+    }
+
+    public void setPreferParkingStrategy(ParkingStrategyEnum preferParkingStrategy) {
+        this.preferParkingStrategy = preferParkingStrategy;
     }
 }

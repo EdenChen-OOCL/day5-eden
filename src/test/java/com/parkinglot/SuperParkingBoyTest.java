@@ -3,8 +3,7 @@ package com.parkinglot;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.parkinglot.strategy.StrategyEnum;
-import com.parkinglot.strategy.StrategyFactory;
+import com.parkinglot.strategy.ParkingStrategyEnum;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,7 @@ public class SuperParkingBoyTest{
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = createSuperParkingBoyWithTwoParkingLot(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = createParkingBoyWithTwoParkingLotAndPreferMaxAvailablePositionRate(firstParkingLot, secondParkingLot);
         // When
         Ticket ticket = parkingBoy.park(new Car());
         ParkingLot targetParkingLot = parkingBoy.getParkingLotByTicket(ticket);
@@ -27,7 +26,7 @@ public class SuperParkingBoyTest{
         // Given
         ParkingLot firstParkingLot = new ParkingLot(5);
         ParkingLot secondParkingLot = new ParkingLot(1);
-        ParkingBoy parkingBoy = createSuperParkingBoyWithTwoParkingLot(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = createParkingBoyWithTwoParkingLotAndPreferMaxAvailablePositionRate(firstParkingLot, secondParkingLot);
         // When
         Ticket firstTicket = parkingBoy.park(new Car());
         Ticket secondTicket = parkingBoy.park(new Car());
@@ -43,7 +42,7 @@ public class SuperParkingBoyTest{
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = createSuperParkingBoyWithTwoParkingLot(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = createParkingBoyWithTwoParkingLotAndPreferMaxAvailablePositionRate(firstParkingLot, secondParkingLot);
         Ticket wrongTicket = new Ticket();
         // When
         UnrecognizedParkingTicketException exception = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(wrongTicket));
@@ -56,7 +55,7 @@ public class SuperParkingBoyTest{
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
-        ParkingBoy parkingBoy = createSuperParkingBoyWithTwoParkingLot(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = createParkingBoyWithTwoParkingLotAndPreferMaxAvailablePositionRate(firstParkingLot, secondParkingLot);
         Car car = new Car();
         Ticket ticket = parkingBoy.park(car);
         // When
@@ -70,7 +69,7 @@ public class SuperParkingBoyTest{
         // Given
         ParkingLot firstParkingLot = new ParkingLot(0);
         ParkingLot secondParkingLot = new ParkingLot(0);
-        ParkingBoy parkingBoy = createSuperParkingBoyWithTwoParkingLot(firstParkingLot, secondParkingLot);
+        ParkingBoy parkingBoy = createParkingBoyWithTwoParkingLotAndPreferMaxAvailablePositionRate(firstParkingLot, secondParkingLot);
         Car secondCar = new Car();
         // When
         // Then
@@ -80,9 +79,10 @@ public class SuperParkingBoyTest{
                 "No available position.");
     }
     
-    private static ParkingBoy createSuperParkingBoyWithTwoParkingLot(ParkingLot firstParkingLot, ParkingLot secondParkingLot) {
-        ParkingBoy parkingBoy = StrategyFactory.getParkingBoy(StrategyEnum.MAXIMUM_AVAILABLE_POSITION_RATE);
-        parkingBoy.assignParkingLots(List.of(firstParkingLot, secondParkingLot));
+    private static ParkingBoy createParkingBoyWithTwoParkingLotAndPreferMaxAvailablePositionRate(ParkingLot firstParkingLot, ParkingLot secondParkingLot) {
+        ParkingBoy parkingBoy = new ParkingBoy();
+        parkingBoy.setPreferParkingStrategy(ParkingStrategyEnum.MAXIMUM_AVAILABLE_POSITION_RATE);
+        parkingBoy.setParkingLots(List.of(firstParkingLot, secondParkingLot));
         return parkingBoy;
     }
 }

@@ -1,16 +1,17 @@
 package com.parkinglot;
 
+import com.parkinglot.strategy.ParkingStrategyEnum;
 import java.util.Comparator;
 import java.util.List;
 
 public class SmartParkingBoy extends ParkingBoy {
 
     public SmartParkingBoy() {
-        super();
+        super(ParkingStrategyEnum.MAXIMUM_AVAILABLE_POSITION);
     }
 
     public SmartParkingBoy(List<ParkingLot> parkingLots) {
-        super(parkingLots);
+        super(parkingLots, ParkingStrategyEnum.MAXIMUM_AVAILABLE_POSITION);
     }
 
     @Override
