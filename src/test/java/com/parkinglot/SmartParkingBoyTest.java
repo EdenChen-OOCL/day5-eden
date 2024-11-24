@@ -3,6 +3,7 @@ package com.parkinglot;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.parkinglot.strategy.ParkingStrategyEnum;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ public class SmartParkingBoyTest {
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        ParkingBoy parkingBoy = getSmartParkingBoy(firstParkingLot, secondParkingLot);
         // When
         Ticket ticket = parkingBoy.park(new Car());
         ParkingLot targetParkingLot = parkingBoy.getParkingLotByTicket(ticket);
@@ -20,12 +21,13 @@ public class SmartParkingBoyTest {
         assertEquals(firstParkingLot, targetParkingLot);
     }
 
+
     @Test
     public void should_park_in_second_when_park_given_first_has_1_empty_position_and_second_has_10() {
         // Given
         ParkingLot firstParkingLot = new ParkingLot(1);
         ParkingLot secondParkingLot = new ParkingLot(10);
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        ParkingBoy parkingBoy = getSmartParkingBoy(firstParkingLot, secondParkingLot);
         // When
         Ticket ticket = parkingBoy.park(new Car());
         ParkingLot targetParkingLot = parkingBoy.getParkingLotByTicket(ticket);
@@ -38,7 +40,7 @@ public class SmartParkingBoyTest {
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        ParkingBoy parkingBoy = getSmartParkingBoy(firstParkingLot, secondParkingLot);
         Car carA = new Car();
         Car carB = new Car();
         Ticket ticketA = parkingBoy.park(carA);
@@ -56,7 +58,7 @@ public class SmartParkingBoyTest {
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        ParkingBoy parkingBoy = getSmartParkingBoy(firstParkingLot, secondParkingLot);
         Ticket wrongTicket = new Ticket();
         // When
         UnrecognizedParkingTicketException exception = assertThrows(UnrecognizedParkingTicketException.class, () -> parkingBoy.fetch(wrongTicket));
@@ -69,7 +71,7 @@ public class SmartParkingBoyTest {
         // Given
         ParkingLot firstParkingLot = new ParkingLot();
         ParkingLot secondParkingLot = new ParkingLot();
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        ParkingBoy parkingBoy = getSmartParkingBoy(firstParkingLot, secondParkingLot);
         Car car = new Car();
         Ticket ticket = parkingBoy.park(car);
         // When
@@ -83,7 +85,7 @@ public class SmartParkingBoyTest {
         // Given
         ParkingLot firstParkingLot = new ParkingLot(0);
         ParkingLot secondParkingLot = new ParkingLot(0);
-        SmartParkingBoy parkingBoy = new SmartParkingBoy(List.of(firstParkingLot, secondParkingLot));
+        ParkingBoy parkingBoy = getSmartParkingBoy(firstParkingLot, secondParkingLot);
         Car secondCar = new Car();
         // When
         // Then
@@ -92,5 +94,10 @@ public class SmartParkingBoyTest {
                 () -> parkingBoy.park(secondCar),
                 "No available position.");
     }
+
+    private static ParkingBoy getSmartParkingBoy(ParkingLot firstParkingLot, ParkingLot secondParkingLot) {
+        return new ParkingBoy(List.of(firstParkingLot, secondParkingLot), ParkingStrategyEnum.MAXIMUM_AVAILABLE_POSITION);
+    }
+
 
 }
