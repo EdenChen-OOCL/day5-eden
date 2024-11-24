@@ -22,11 +22,6 @@ public class ParkingBoy {
         preferParkingStrategy = ParkingStrategyEnum.SEQUENTIAL;
     }
 
-    public ParkingBoy(ParkingStrategyEnum preferParkingStrategy) {
-        this();
-        this.preferParkingStrategy = preferParkingStrategy;
-    }
-
     public ParkingBoy(List<ParkingLot> parkingLots, ParkingStrategyEnum preferParkingStrategy) {
         this(parkingLots);
         this.preferParkingStrategy = preferParkingStrategy;
@@ -45,13 +40,6 @@ public class ParkingBoy {
     public ParkingLot getParkingLotByTicket(Ticket ticket) {
         int parkingLotNumber = ticket.getParkingLotNumber();
         return parkingLots.get(parkingLotNumber);
-    }
-
-    public ParkingLot getAvailableParkingLot() {
-        return parkingLots.stream()
-                .filter(ParkingLot::isAvailable)
-                .findFirst()
-                .orElse(parkingLots.get(0));
     }
 
     public Ticket forceParkIn(Car car, ParkingLot parkingLot) {
