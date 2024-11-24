@@ -5,6 +5,10 @@ import java.util.List;
 
 public class SuperParkingBoy extends ParkingBoy {
 
+    public SuperParkingBoy() {
+        super();
+    }
+
     public SuperParkingBoy(List<ParkingLot> parkingLots) {
         super(parkingLots);
     }

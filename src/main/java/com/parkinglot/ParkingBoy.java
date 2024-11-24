@@ -48,4 +48,9 @@ public class ParkingBoy {
         ticket.setParkingLotNumber(parkingLots.indexOf(parkingLot));
         return ticket;
     }
+
+    public void assignParkingLots(List<ParkingLot> parkingLots) {
+        this.parkingLots.clear();
+        this.parkingLots.addAll(parkingLots);
+    }
 }
