@@ -81,8 +81,7 @@ public class SuperParkingBoyTest{
     }
     
     private static ParkingBoy createSuperParkingBoyWithTwoParkingLot(ParkingLot firstParkingLot, ParkingLot secondParkingLot) {
-        StrategyFactory strategyFactory = new StrategyFactory();
-        ParkingBoy parkingBoy = strategyFactory.getParkingBoy(StrategyEnum.MAXIMUM_AVAILABLE_POSITION_RATE);
+        ParkingBoy parkingBoy = StrategyFactory.getParkingBoy(StrategyEnum.MAXIMUM_AVAILABLE_POSITION_RATE);
         parkingBoy.assignParkingLots(List.of(firstParkingLot, secondParkingLot));
         return parkingBoy;
     }
